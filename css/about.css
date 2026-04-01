@@ -1,0 +1,231 @@
+/* ========================================
+   ABOUT PAGE
+   ======================================== */
+.about-section {
+    padding: 80px 0;
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    margin-bottom: 100px;
+}
+
+.about-content.reverse {
+    direction: rtl;
+}
+
+.about-content.reverse > * {
+    direction: ltr;
+}
+
+.about-text h2 {
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+.about-text p {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 16px;
+}
+
+.about-image {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+}
+
+.about-image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(26, 92, 58, 0.2), rgba(200, 169, 81, 0.1));
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+/* Values Grid */
+.values-section {
+    padding: 100px 0;
+    background: var(--bg-surface);
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.value-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 40px 28px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.value-card:hover {
+    border-color: var(--border-light);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.value-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--primary-glow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 1.8rem;
+}
+
+.value-card h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.value-card p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+/* Timeline */
+.timeline-section {
+    padding: 100px 0;
+}
+
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.timeline-item:nth-child(odd) {
+    justify-content: flex-start;
+    padding-right: calc(50% + 30px);
+    text-align: right;
+}
+
+.timeline-item:nth-child(even) {
+    justify-content: flex-end;
+    padding-left: calc(50% + 30px);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    border: 3px solid var(--bg-dark);
+    z-index: 1;
+}
+
+.timeline-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    transition: var(--transition);
+}
+
+.timeline-card:hover {
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-md);
+}
+
+.timeline-year {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.timeline-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.timeline-card p {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    .about-content.reverse {
+        direction: ltr;
+    }
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+    .timeline::before {
+        left: 20px;
+    }
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+        padding-left: 50px;
+        padding-right: 0;
+        text-align: left;
+        justify-content: flex-start;
+    }
+    .timeline-item::before {
+        left: 20px;
+    }
+}

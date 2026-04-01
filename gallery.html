@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Greenfield Academy</title>
+    <meta name="description" content="Explore the vibrant moments captured at Greenfield Academy - academic events, sports, cultural celebrations, and campus life.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/gallery.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <path d="M18 2L4 10V26L18 34L32 26V10L18 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M18 8L10 13V23L18 28L26 23V13L18 8Z" fill="currentColor" opacity="0.3"/>
+                        <path d="M18 14L14 16.5V21.5L18 24L22 21.5V16.5L18 14Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-name">Greenfield</span>
+                    <span class="logo-sub">Academy</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="gallery.html" class="nav-link active">Gallery</a>
+                <a href="faculty.html" class="nav-link">Faculty</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+                <a href="admin.html" class="nav-link nav-admin">Admin</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <span class="section-tag">Our Memories</span>
+            <h1>Photo Gallery</h1>
+            <p>Capturing the vibrant moments of learning, celebration, and growth at Greenfield Academy</p>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-filters" id="galleryFilters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="Academic">Academic</button>
+                <button class="filter-btn" data-filter="Events">Events</button>
+                <button class="filter-btn" data-filter="Sports">Sports</button>
+                <button class="filter-btn" data-filter="Infrastructure">Infrastructure</button>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">&times;</button>
+        <img id="lightboxImg" src="" alt="">
+        <div class="lightbox-caption">
+            <h3 id="lightboxTitle"></h3>
+            <p id="lightboxCategory"></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+                                <path d="M18 2L4 10V26L18 34L32 26V10L18 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M18 14L14 16.5V21.5L18 24L22 21.5V16.5L18 14Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <span>Greenfield Academy</span>
+                    </div>
+                    <p>Dedicated to providing world-class education and nurturing the leaders of tomorrow since 2001.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="faculty.html">Faculty</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Programs</h4>
+                    <a href="#">Primary School</a>
+                    <a href="#">Middle School</a>
+                    <a href="#">High School</a>
+                    <a href="#">Senior Secondary</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <p>📍 123 Education Lane, Knowledge City</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>✉️ info@greenfieldacademy.edu</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Greenfield Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Gallery page logic
+        (function() {
+            const grid = document.getElementById('galleryGrid');
+            const filtersContainer = document.getElementById('galleryFilters');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            const lightboxTitle = document.getElementById('lightboxTitle');
+            const lightboxCategory = document.getElementById('lightboxCategory');
+            const lightboxClose = document.getElementById('lightboxClose');
+
+            let allImages = [];
+            let currentFilter = 'all';
+
+            function loadImages() {
+                allImages = [
+                    ...DataStore.getGalleryImages(),
+                    ...DataStore.getCarouselImages()
+                ];
+                renderGallery();
+            }
+
+            function renderGallery() {
+                const filtered = currentFilter === 'all' 
+                    ? allImages 
+                    : allImages.filter(img => img.category === currentFilter);
+
+                if (filtered.length === 0) {
+                    grid.innerHTML = '<div class="no-results">No images found for this category.</div>';
+                    return;
+                }
+
+                grid.innerHTML = filtered.map(img => `
+                    <div class="gallery-item" data-src="${img.src}" data-title="${img.title}" data-category="${img.category}">
+                        <img src="${img.src}" alt="${img.title}" loading="lazy">
+                        <div class="gallery-item-overlay">
+                            <span class="gallery-item-title">${img.title}</span>
+                            <span class="gallery-item-category">${img.category}</span>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Click handlers
+                grid.querySelectorAll('.gallery-item').forEach(item => {
+                    item.addEventListener('click', () => {
+                        lightboxImg.src = item.dataset.src;
+                        lightboxTitle.textContent = item.dataset.title;
+                        lightboxCategory.textContent = item.dataset.category;
+                        lightbox.classList.add('open');
+                        document.body.style.overflow = 'hidden';
+                    });
+                });
+            }
+
+            // Filter buttons
+            filtersContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-btn')) {
+                    filtersContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilter = e.target.dataset.filter;
+                    renderGallery();
+                }
+            });
+
+            // Close lightbox
+            lightboxClose.addEventListener('click', () => {
+                lightbox.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    lightbox.classList.remove('open');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    lightbox.classList.remove('open');
+                    document.body.style.overflow = '';
+                }
+            });
+
+            loadImages();
+        })();
+    </script>
+</body>
+</html>

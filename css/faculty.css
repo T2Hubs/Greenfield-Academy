@@ -1,0 +1,113 @@
+/* ========================================
+   FACULTY PAGE
+   ======================================== */
+.faculty-section {
+    padding: 80px 0;
+}
+
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 28px;
+}
+
+.faculty-card {
+    background: var(--gradient-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    transition: var(--transition);
+    position: relative;
+}
+
+.faculty-card:hover {
+    border-color: rgba(45, 143, 94, 0.3);
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-glow);
+}
+
+.faculty-card-img {
+    position: relative;
+    height: 280px;
+    overflow: hidden;
+}
+
+.faculty-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.faculty-card:hover .faculty-card-img img {
+    transform: scale(1.05);
+}
+
+.faculty-card-img::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, var(--bg-card), transparent);
+}
+
+.faculty-card-body {
+    padding: 24px 28px 28px;
+    text-align: center;
+    position: relative;
+}
+
+.faculty-card-name {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.faculty-card-designation {
+    font-size: 0.85rem;
+    color: var(--primary-light);
+    font-weight: 500;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.faculty-card-subject {
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.faculty-card-qualification {
+    display: inline-block;
+    padding: 4px 14px;
+    background: rgba(200, 169, 81, 0.1);
+    border: 1px solid rgba(200, 169, 81, 0.2);
+    border-radius: 20px;
+    font-size: 0.78rem;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.faculty-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--bg-card), var(--bg-surface));
+    color: var(--text-muted);
+    font-size: 4rem;
+}
+
+@media (max-width: 768px) {
+    .faculty-grid {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+}

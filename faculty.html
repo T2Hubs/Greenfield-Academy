@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Faculty - Greenfield Academy</title>
+    <meta name="description" content="Meet the dedicated and experienced faculty members at Greenfield Academy who are committed to nurturing excellence.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/faculty.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <path d="M18 2L4 10V26L18 34L32 26V10L18 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M18 8L10 13V23L18 28L26 23V13L18 8Z" fill="currentColor" opacity="0.3"/>
+                        <path d="M18 14L14 16.5V21.5L18 24L22 21.5V16.5L18 14Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-name">Greenfield</span>
+                    <span class="logo-sub">Academy</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="faculty.html" class="nav-link active">Faculty</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+                <a href="admin.html" class="nav-link nav-admin">Admin</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <span class="section-tag">Our Team</span>
+            <h1>Meet Our Faculty</h1>
+            <p>Dedicated educators committed to shaping minds and building futures with passion and expertise</p>
+        </div>
+    </section>
+
+    <!-- Faculty Grid -->
+    <section class="faculty-section">
+        <div class="container">
+            <div class="faculty-grid" id="facultyGrid">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+                                <path d="M18 2L4 10V26L18 34L32 26V10L18 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M18 14L14 16.5V21.5L18 24L22 21.5V16.5L18 14Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <span>Greenfield Academy</span>
+                    </div>
+                    <p>Dedicated to providing world-class education and nurturing the leaders of tomorrow since 2001.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="faculty.html">Faculty</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Programs</h4>
+                    <a href="#">Primary School</a>
+                    <a href="#">Middle School</a>
+                    <a href="#">High School</a>
+                    <a href="#">Senior Secondary</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <p>📍 123 Education Lane, Knowledge City</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>✉️ info@greenfieldacademy.edu</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Greenfield Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        (function() {
+            const grid = document.getElementById('facultyGrid');
+            const teachers = DataStore.getTeachers();
+
+            if (teachers.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align:center; padding:80px 0; color: var(--text-muted);">
+                        <p style="font-size:1.1rem;">No faculty members added yet.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = teachers.map(teacher => `
+                <div class="faculty-card fade-in">
+                    <div class="faculty-card-img">
+                        ${teacher.photo 
+                            ? `<img src="${teacher.photo}" alt="${teacher.name}" loading="lazy">`
+                            : `<div class="faculty-placeholder">${teacher.name.charAt(0)}</div>`
+                        }
+                    </div>
+                    <div class="faculty-card-body">
+                        <h3 class="faculty-card-name">${teacher.name}</h3>
+                        <p class="faculty-card-designation">${teacher.designation}</p>
+                        <p class="faculty-card-subject">${teacher.subject}</p>
+                        <span class="faculty-card-qualification">${teacher.qualification}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-observe fade-in elements
+            document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
+        })();
+    </script>
+</body>
+</html>

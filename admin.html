@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Greenfield Academy</title>
+    <meta name="description" content="Admin panel for managing Greenfield Academy website content.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">
+                <div class="logo-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none">
+                        <path d="M18 2L4 10V26L18 34L32 26V10L18 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                        <path d="M18 8L10 13V23L18 28L26 23V13L18 8Z" fill="currentColor" opacity="0.3"/>
+                        <path d="M18 14L14 16.5V21.5L18 24L22 21.5V16.5L18 14Z" fill="currentColor"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-name">Greenfield</span>
+                    <span class="logo-sub">Academy</span>
+                </div>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="gallery.html" class="nav-link">Gallery</a>
+                <a href="faculty.html" class="nav-link">Faculty</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="contact.html" class="nav-link">Contact Us</a>
+                <a href="admin.html" class="nav-link nav-admin active">Admin</a>
+            </div>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <span class="section-tag">Dashboard</span>
+            <h1>Admin Panel</h1>
+            <p>Manage teachers, notices, and gallery images for Greenfield Academy</p>
+        </div>
+    </section>
+
+    <!-- Admin Content -->
+    <section class="admin-section">
+        <div class="container">
+            <!-- Tabs -->
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="teachers">
+                    <span class="admin-tab-icon">👨‍🏫</span>
+                    <span>Teachers</span>
+                </button>
+                <button class="admin-tab" data-tab="notices">
+                    <span class="admin-tab-icon">📢</span>
+                    <span>Notices</span>
+                </button>
+                <button class="admin-tab" data-tab="gallery">
+                    <span class="admin-tab-icon">🖼️</span>
+                    <span>Gallery Images</span>
+                </button>
+                <button class="admin-tab" data-tab="carousel">
+                    <span class="admin-tab-icon">🎠</span>
+                    <span>Carousel</span>
+                </button>
+            </div>
+
+            <!-- Teachers Panel -->
+            <div class="admin-panel active" id="panel-teachers">
+                <div class="admin-form-card">
+                    <h3>Add New Teacher</h3>
+                    <p>Fill in the details below to add a new faculty member</p>
+                    <form id="teacherForm">
+                        <div class="admin-form-row">
+                            <div class="form-group">
+                                <label for="teacherName">Full Name *</label>
+                                <input type="text" id="teacherName" placeholder="e.g., Dr. Priya Sharma" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherDesignation">Designation *</label>
+                                <select id="teacherDesignation" required>
+                                    <option value="">Select Designation</option>
+                                    <option value="Principal">Principal</option>
+                                    <option value="Vice Principal">Vice Principal</option>
+                                    <option value="Head of Department">Head of Department</option>
+                                    <option value="Senior Teacher">Senior Teacher</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Assistant Teacher">Assistant Teacher</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="admin-form-row">
+                            <div class="form-group">
+                                <label for="teacherSubject">Subject *</label>
+                                <input type="text" id="teacherSubject" placeholder="e.g., Mathematics" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="teacherQualification">Qualification *</label>
+                                <input type="text" id="teacherQualification" placeholder="e.g., M.Sc., B.Ed" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Teacher Photo</label>
+                            <div class="image-upload" id="teacherPhotoUpload">
+                                <div class="image-upload-icon">📷</div>
+                                <p>Drag & drop or <span>browse</span> to upload</p>
+                                <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">PNG, JPG up to 5MB</p>
+                                <input type="file" id="teacherPhoto" accept="image/*">
+                            </div>
+                            <div class="image-preview" id="teacherPhotoPreview">
+                                <img id="teacherPhotoPreviewImg" src="" alt="Preview">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Teacher</button>
+                    </form>
+                </div>
+
+                <div class="admin-list-header">
+                    <h3>Current Faculty</h3>
+                    <span class="admin-list-count" id="teacherCount">0 members</span>
+                </div>
+                <div class="admin-list" id="teacherList"></div>
+            </div>
+
+            <!-- Notices Panel -->
+            <div class="admin-panel" id="panel-notices">
+                <div class="admin-form-card">
+                    <h3>Post New Notice</h3>
+                    <p>Create a new notice to display on the school website</p>
+                    <form id="noticeForm">
+                        <div class="admin-form-row">
+                            <div class="form-group">
+                                <label for="noticeTitle">Notice Title *</label>
+                                <input type="text" id="noticeTitle" placeholder="Enter notice title" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="noticeType">Type *</label>
+                                <select id="noticeType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="general">General</option>
+                                    <option value="urgent">Urgent</option>
+                                    <option value="event">Event</option>
+                                    <option value="academic">Academic</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="noticeDate">Date *</label>
+                            <input type="date" id="noticeDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="noticeContent">Notice Content *</label>
+                            <textarea id="noticeContent" placeholder="Write the notice content here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post Notice</button>
+                    </form>
+                </div>
+
+                <div class="admin-list-header">
+                    <h3>All Notices</h3>
+                    <span class="admin-list-count" id="noticeCount">0 notices</span>
+                </div>
+                <div class="admin-list" id="noticeList"></div>
+            </div>
+
+            <!-- Gallery Panel -->
+            <div class="admin-panel" id="panel-gallery">
+                <div class="admin-form-card">
+                    <h3>Add Gallery Image</h3>
+                    <p>Upload images of school functions, events, and campus life</p>
+                    <form id="galleryForm">
+                        <div class="admin-form-row">
+                            <div class="form-group">
+                                <label for="galleryTitle">Image Title *</label>
+                                <input type="text" id="galleryTitle" placeholder="e.g., Annual Sports Day" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="galleryCategory">Category *</label>
+                                <select id="galleryCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Academic">Academic</option>
+                                    <option value="Events">Events</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Infrastructure">Infrastructure</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Image File *</label>
+                            <div class="image-upload" id="galleryImageUpload">
+                                <div class="image-upload-icon">🖼️</div>
+                                <p>Drag & drop or <span>browse</span> to upload</p>
+                                <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">PNG, JPG up to 5MB</p>
+                                <input type="file" id="galleryImage" accept="image/*" required>
+                            </div>
+                            <div class="image-preview" id="galleryImagePreview">
+                                <img id="galleryImagePreviewImg" src="" alt="Preview">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add to Gallery</button>
+                    </form>
+                </div>
+
+                <div class="admin-list-header">
+                    <h3>Gallery Images</h3>
+                    <span class="admin-list-count" id="galleryCount">0 images</span>
+                </div>
+                <div class="admin-list" id="galleryList"></div>
+            </div>
+
+            <!-- Carousel Panel -->
+            <div class="admin-panel" id="panel-carousel">
+                <div class="admin-form-card">
+                    <h3>Add Carousel Slide</h3>
+                    <p>Upload images for the homepage carousel slider</p>
+                    <form id="carouselForm">
+                        <div class="admin-form-row">
+                            <div class="form-group">
+                                <label for="carouselTitle">Slide Title *</label>
+                                <input type="text" id="carouselTitle" placeholder="e.g., School Function 2026" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="carouselCategory">Category *</label>
+                                <select id="carouselCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Events">Events</option>
+                                    <option value="Sports">Sports</option>
+                                    <option value="Infrastructure">Infrastructure</option>
+                                    <option value="Academic">Academic</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Slide Image *</label>
+                            <div class="image-upload" id="carouselImageUpload">
+                                <div class="image-upload-icon">🎠</div>
+                                <p>Drag & drop or <span>browse</span> to upload</p>
+                                <p style="font-size:0.8rem; color:var(--text-muted); margin-top:4px;">Recommended: 1600×900 px</p>
+                                <input type="file" id="carouselImage" accept="image/*" required>
+                            </div>
+                            <div class="image-preview" id="carouselImagePreview">
+                                <img id="carouselImagePreviewImg" src="" alt="Preview">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add to Carousel</button>
+                    </form>
+                </div>
+
+                <div class="admin-list-header">
+                    <h3>Carousel Slides</h3>
+                    <span class="admin-list-count" id="carouselCount">0 slides</span>
+                </div>
+                <div class="admin-list" id="carouselList"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+                                <path d="M18 2L4 10V26L18 34L32 26V10L18 2Z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                <path d="M18 14L14 16.5V21.5L18 24L22 21.5V16.5L18 14Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <span>Greenfield Academy</span>
+                    </div>
+                    <p>Dedicated to providing world-class education and nurturing the leaders of tomorrow since 2001.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <a href="about.html">About Us</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="faculty.html">Faculty</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Programs</h4>
+                    <a href="#">Primary School</a>
+                    <a href="#">Middle School</a>
+                    <a href="#">High School</a>
+                    <a href="#">Senior Secondary</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <p>📍 123 Education Lane, Knowledge City</p>
+                    <p>📞 +91 98765 43210</p>
+                    <p>✉️ info@greenfieldacademy.edu</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Greenfield Academy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+    (function() {
+        // ============ TAB SWITCHING ============
+        const tabs = document.querySelectorAll('.admin-tab');
+        const panels = document.querySelectorAll('.admin-panel');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                panels.forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
+            });
+        });
+
+        // ============ IMAGE PREVIEW HELPER ============
+        function setupImagePreview(inputId, previewId, previewImgId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const previewImg = document.getElementById(previewImgId);
+
+            input.addEventListener('change', function() {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        previewImg.src = e.target.result;
+                        preview.classList.add('has-image');
+                    };
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        }
+
+        setupImagePreview('teacherPhoto', 'teacherPhotoPreview', 'teacherPhotoPreviewImg');
+        setupImagePreview('galleryImage', 'galleryImagePreview', 'galleryImagePreviewImg');
+        setupImagePreview('carouselImage', 'carouselImagePreview', 'carouselImagePreviewImg');
+
+        // ============ TEACHERS ============
+        function renderTeachers() {
+            const teachers = DataStore.getTeachers();
+            const list = document.getElementById('teacherList');
+            document.getElementById('teacherCount').textContent = `${teachers.length} members`;
+
+            if (teachers.length === 0) {
+                list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">👨‍🏫</div><p>No teachers added yet. Use the form above to add faculty members.</p></div>`;
+                return;
+            }
+
+            list.innerHTML = teachers.map(t => `
+                <div class="admin-list-item">
+                    <div class="admin-list-item-img">
+                        ${t.photo 
+                            ? `<img src="${t.photo}" alt="${t.name}">`
+                            : `<div class="admin-list-item-img-placeholder">${t.name.charAt(0)}</div>`
+                        }
+                    </div>
+                    <div class="admin-list-item-info">
+                        <h4>${t.name}</h4>
+                        <p>${t.designation} · ${t.subject} · ${t.qualification}</p>
+                    </div>
+                    <div class="admin-list-item-actions">
+                        <button class="btn btn-danger btn-sm" onclick="deleteTeacher(${t.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.deleteTeacher = function(id) {
+            if (confirm('Are you sure you want to remove this teacher?')) {
+                DataStore.removeTeacher(id);
+                renderTeachers();
+                showToast('Teacher removed successfully', 'info');
+            }
+        };
+
+        document.getElementById('teacherForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const photoInput = document.getElementById('teacherPhoto');
+            let photo = '';
+            
+            if (photoInput.files && photoInput.files[0]) {
+                photo = await fileToBase64(photoInput.files[0]);
+            }
+
+            DataStore.addTeacher({
+                name: document.getElementById('teacherName').value,
+                designation: document.getElementById('teacherDesignation').value,
+                subject: document.getElementById('teacherSubject').value,
+                qualification: document.getElementById('teacherQualification').value,
+                photo: photo
+            });
+
+            showToast('Teacher added successfully!', 'success');
+            this.reset();
+            document.getElementById('teacherPhotoPreview').classList.remove('has-image');
+            renderTeachers();
+        });
+
+        // ============ NOTICES ============
+        function renderNotices() {
+            const notices = DataStore.getNotices();
+            const list = document.getElementById('noticeList');
+            document.getElementById('noticeCount').textContent = `${notices.length} notices`;
+
+            if (notices.length === 0) {
+                list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">📢</div><p>No notices posted yet. Use the form above to create a notice.</p></div>`;
+                return;
+            }
+
+            const typeColors = {
+                urgent: 'background:rgba(239,68,68,0.15);color:#f87171;border:1px solid rgba(239,68,68,0.3)',
+                general: 'background:rgba(59,130,246,0.15);color:#60a5fa;border:1px solid rgba(59,130,246,0.3)',
+                event: 'background:rgba(168,85,247,0.15);color:#c084fc;border:1px solid rgba(168,85,247,0.3)',
+                academic: 'background:rgba(45,143,94,0.15);color:#4ade80;border:1px solid rgba(45,143,94,0.3)'
+            };
+
+            list.innerHTML = notices.map(n => `
+                <div class="admin-list-item">
+                    <div class="admin-list-item-info" style="flex:1;">
+                        <h4>${n.title}</h4>
+                        <p>${formatDate(n.date)} · <span class="admin-list-item-badge" style="${typeColors[n.type] || ''}">${n.type}</span></p>
+                    </div>
+                    <div class="admin-list-item-actions">
+                        <button class="btn btn-danger btn-sm" onclick="deleteNotice(${n.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.deleteNotice = function(id) {
+            if (confirm('Are you sure you want to delete this notice?')) {
+                DataStore.removeNotice(id);
+                renderNotices();
+                showToast('Notice deleted successfully', 'info');
+            }
+        };
+
+        document.getElementById('noticeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            DataStore.addNotice({
+                title: document.getElementById('noticeTitle').value,
+                type: document.getElementById('noticeType').value,
+                date: document.getElementById('noticeDate').value,
+                content: document.getElementById('noticeContent').value
+            });
+            showToast('Notice posted successfully!', 'success');
+            this.reset();
+            renderNotices();
+        });
+
+        // Set today's date as default
+        document.getElementById('noticeDate').valueAsDate = new Date();
+
+        // ============ GALLERY ============
+        function renderGalleryAdmin() {
+            const images = DataStore.getGalleryImages();
+            const list = document.getElementById('galleryList');
+            document.getElementById('galleryCount').textContent = `${images.length} images`;
+
+            if (images.length === 0) {
+                list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🖼️</div><p>No gallery images yet. Upload images above.</p></div>`;
+                return;
+            }
+
+            list.innerHTML = images.map(img => `
+                <div class="admin-list-item">
+                    <div class="admin-list-item-img">
+                        <img src="${img.src}" alt="${img.title}">
+                    </div>
+                    <div class="admin-list-item-info">
+                        <h4>${img.title}</h4>
+                        <p>${img.category}</p>
+                    </div>
+                    <div class="admin-list-item-actions">
+                        <button class="btn btn-danger btn-sm" onclick="deleteGalleryImage(${img.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.deleteGalleryImage = function(id) {
+            if (confirm('Delete this gallery image?')) {
+                DataStore.removeGalleryImage(id);
+                renderGalleryAdmin();
+                showToast('Image removed from gallery', 'info');
+            }
+        };
+
+        document.getElementById('galleryForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const imageInput = document.getElementById('galleryImage');
+            if (!imageInput.files || !imageInput.files[0]) {
+                showToast('Please select an image', 'error');
+                return;
+            }
+
+            const src = await fileToBase64(imageInput.files[0]);
+            DataStore.addGalleryImage({
+                title: document.getElementById('galleryTitle').value,
+                category: document.getElementById('galleryCategory').value,
+                src: src
+            });
+            showToast('Image added to gallery!', 'success');
+            this.reset();
+            document.getElementById('galleryImagePreview').classList.remove('has-image');
+            renderGalleryAdmin();
+        });
+
+        // ============ CAROUSEL ============
+        function renderCarouselAdmin() {
+            const images = DataStore.getCarouselImages();
+            const list = document.getElementById('carouselList');
+            document.getElementById('carouselCount').textContent = `${images.length} slides`;
+
+            if (images.length === 0) {
+                list.innerHTML = `<div class="empty-state"><div class="empty-state-icon">🎠</div><p>No carousel slides yet. Upload images above.</p></div>`;
+                return;
+            }
+
+            list.innerHTML = images.map(img => `
+                <div class="admin-list-item">
+                    <div class="admin-list-item-img">
+                        <img src="${img.src}" alt="${img.title}">
+                    </div>
+                    <div class="admin-list-item-info">
+                        <h4>${img.title}</h4>
+                        <p>${img.category}</p>
+                    </div>
+                    <div class="admin-list-item-actions">
+                        <button class="btn btn-danger btn-sm" onclick="deleteCarouselImage(${img.id})">Delete</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.deleteCarouselImage = function(id) {
+            if (confirm('Delete this carousel slide?')) {
+                DataStore.removeCarouselImage(id);
+                renderCarouselAdmin();
+                showToast('Carousel slide removed', 'info');
+            }
+        };
+
+        document.getElementById('carouselForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const imageInput = document.getElementById('carouselImage');
+            if (!imageInput.files || !imageInput.files[0]) {
+                showToast('Please select an image', 'error');
+                return;
+            }
+
+            const src = await fileToBase64(imageInput.files[0]);
+            DataStore.addCarouselImage({
+                title: document.getElementById('carouselTitle').value,
+                category: document.getElementById('carouselCategory').value,
+                src: src
+            });
+            showToast('Carousel slide added!', 'success');
+            this.reset();
+            document.getElementById('carouselImagePreview').classList.remove('has-image');
+            renderCarouselAdmin();
+        });
+
+        // ============ INITIAL RENDER ============
+        renderTeachers();
+        renderNotices();
+        renderGalleryAdmin();
+        renderCarouselAdmin();
+    })();
+    </script>
+</body>
+</html>
